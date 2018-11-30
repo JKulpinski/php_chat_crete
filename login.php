@@ -5,12 +5,12 @@
  * Date: 29.11.2018
  * Time: 15:12
  */
-include('DB.php');
+include('DB.php'); //connection database
 session_start();
 
-$message = '';
+$message = ''; //we store here messages
 
-if(isset($_SESSION['user_id'])){ //if user is logined in already
+if(isset($_SESSION['user_id'])){ //if user is already login
     header('location:index.php');
 }
 
@@ -36,11 +36,11 @@ if (isset($_POST['login'])) { // when press submit button
 
                 header('location:index.php');//redirect to index.php
             } else {
-                $message = '<label>Wrong Password</label>';
+                $message = '<label>Wrong Password!</label>';
             }
         }
     } else {
-        $message = '<label>Wrong Username</label>';
+        $message = '<label>Wrong Username!</label>';
     }
 }
 

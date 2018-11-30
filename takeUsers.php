@@ -10,7 +10,7 @@
 
 include ('DB.php');
 session_start();
-
+//take detail info about all users except currently login user
 $query = "SELECT * FROM login WHERE user_id !='".$_SESSION['user_id']."'";
 $statement = $connect->prepare($query);
 $statement->execute();
