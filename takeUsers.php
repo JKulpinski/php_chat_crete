@@ -23,12 +23,25 @@ $out = '<table class="table table-bordered table-striped">
                 <td>Action</td>
             </tr>';
 foreach ($result as $row){
+    $status = '';
+    date_default_timezone_set('Europe/Warsaw');
+    $current_timestamp = strtotime(date('Y-m-d H:i:s') . '-10 second');
+    $current_timestamp = date('Y-m-d H:i:s', $current_timestamp); //convert unix time
+
+    //we check whether user is online
+    $user_last_activity = fetchUserLastActivity($row['user_id'], $connect);
+    if ($user_last_activity > $current_timestamp){
+        $status= '<span class="label label-success">Online</span>';
+    }
+    else{
+        $status = '<span class="label label-danger">Offline</span>';
+    }
+
     $out .= '
     <tr>
         <td>'.$row['username'].'</td>
-        <td></td>
-        <td><button type="button" class="btn btn-info btn-xs
-            start_chat" data-touserid="'.$row['user_id'].'"
+        <td>'.$status.'</td>
+        <td><button type="button" class="btn btn-info btn-xs start_chat" data-touserid="'.$row['user_id'].'"
             data-tousername"'.$row['username'].'">START CHAT
         </button></td>
     </tr>
