@@ -22,6 +22,6 @@ $query = " INSERT INTO chat_message(to_user_id, from_user_id, chat_message, stat
 
 $statement = $connect->prepare($query);
 
-if ($statement->execure($data)){
-
+if ($statement->execute($data)) {
+    echo fetchUserChatHistory($_SESSION['user_id'], $_POST['to_user_id'], $connect);
 }

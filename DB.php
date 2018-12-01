@@ -2,7 +2,8 @@
 date_default_timezone_set('Europe/Athens');
 $connect = new PDO("mysql:host=localhost;dbname=chat", "root", "");
 
-function fetchUserLastActivity($user_id, $connect){
+function fetchUserLastActivity($user_id, $connect)
+{
     $query = "
     SELECT * FROM login_details WHERE user_id = '$user_id'
     ORDER BY last_activity DESC LIMIT 1
@@ -12,47 +13,57 @@ function fetchUserLastActivity($user_id, $connect){
     $statement->execute();
     $result = $statement->fetchAll();
 
-    foreach($result as $row){
+    foreach ($result as $row) {
         return $row['last_activity'];
     }
+}
 
-//    function fetchUserChatHistory($fromUserId, $toUserId, $connect){
-//        $query = "
-// SELECT * FROM chat_message
-// WHERE (from_user_id = '".fromUserId."'
-// AND to_user_id = '".$toUserId."')
-// OR (from_user_id = '".$toUserId."'
-// AND to_user_id = '".$fromUserId."')
-// ORDER BY timestamp ASC
-// ";
-//        $statement = $connect->prepare($query);
-//        $statement->execute();
-//        //here we are all messages
-//        $result = $statement->fetchAll();
-//        $output = '<ul class="list-unstyled">';
+// sending a massage
+function fetchUserChatHistory($fromUserId, $toUserId, $connect)
+{
+    $query = "
+ SELECT * FROM chat_message
+ WHERE (from_user_id = '" . $fromUserId . "'
+ AND to_user_id = '" . $toUserId . "')
+ OR (from_user_id = '" . $toUserId . "'
+ AND to_user_id = '" . $fromUserId . "')
+ ORDER BY timestamp ASC
+ ";
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    //here we are all messages
+    $result = $statement->fetchAll();
+    $output = '<ul class="list-unstyled">';
 
-//        foreach($result as $row){
-//            $userName ="";
-//            if ($row["from_user_id"]==$fromUserId){
-//                $userName = 'b class="text-success">You</b>';
-//            }
-//            else{
-//                $userName = '<b class="text-danger">'.getUserName($row['from_user_id'], $connect).'</br>';
-//            }
-//            $output .='<li style="border-bottom:1px dotted #ccc">
-//               <p> ' $userName.' - '.$row["chat_message"].'<div align="right'>
-//            ';
-//        }
-//    }
-//
-//    function getUserName($userId, $connect){
-//        $query = "SELECT username FROM login WHERE user_id = '$userId'";
-//        $statement = $connect->prepare($query);
-//        $statement->execute();
-//        $result = $statement->fetchAll();
-//
-//        foreach($result as $row){
-//            return $row['username'];
-//        }
-//    }
+    foreach ($result as $row) {
+        $userName = '';
+        if ($row["from_user_id"] == $fromUserId) {
+            $userName = '<b class="text-success">You</b>';
+        } else {
+            $userName = '<b class="text-danger">' . getUserName($row['from_user_id'], $connect) . '</br>';
+        }
+        $output .= '<li style="border-bottom:1px dotted #ccc">
+               <p>' . $userName . ' - ' . $row["chat_message"] . '
+                  <div align="right">
+            -<small><em>' . $row['timestamp'] . '</em></small>
+            </div>
+            </p>
+            </li>
+            ';
+    }
+    $output .= '</ul>';
+    return $output;
+}
+
+function getUserName($userId, $connect)
+{
+    $query = "SELECT username FROM login WHERE user_id = '$userId'";
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+
+    foreach ($result as $row) {
+        return $row['username'];
+    }
+
 };
