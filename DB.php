@@ -27,20 +27,20 @@ function fetchUserChatHistory($fromUserId, $toUserId, $connect)
  AND to_user_id = '" . $toUserId . "')
  OR (from_user_id = '" . $toUserId . "'
  AND to_user_id = '" . $fromUserId . "')
- ORDER BY timestamp ASC
+ ORDER BY timestamp DESC
  ";
     $statement = $connect->prepare($query);
     $statement->execute();
     //here we are all messages
     $result = $statement->fetchAll();
-    $output = '<ul class="list-unstyled">';
+    $output = '<ul class="list-unstyled">'; //bootstrap class
 
     foreach ($result as $row) {
         $userName = '';
         if ($row["from_user_id"] == $fromUserId) {
-            $userName = '<b class="text-success">You</b>';
+            $userName = '<b class="text">You</b>';
         } else {
-            $userName = '<b class="text-danger">' . getUserName($row['from_user_id'], $connect) . '</br>';
+            $userName = '<b class="text">' . getUserName($row['from_user_id'], $connect) . '</b>';
         }
         $output .= '<li style="border-bottom:1px dotted #ccc">
                <p>' . $userName . ' - ' . $row["chat_message"] . '
