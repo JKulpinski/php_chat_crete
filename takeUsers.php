@@ -24,7 +24,7 @@ $out = '<table class="table table-bordered table-striped">
             </tr>';
 foreach ($result as $row){
     $status = '';
-    date_default_timezone_set('Europe/Warsaw');
+    date_default_timezone_set('Europe/Athens');
     $current_timestamp = strtotime(date('Y-m-d H:i:s') . '-10 second');
     $current_timestamp = date('Y-m-d H:i:s', $current_timestamp); //convert unix time
 
@@ -41,8 +41,7 @@ foreach ($result as $row){
     <tr>
         <td>'.$row['username'].'</td>
         <td>'.$status.'</td>
-        <td><button type="button" class="btn btn-info btn-xs start_chat" data-touserid="'.$row['user_id'].'"
-            data-tousername"'.$row['username'].'">START CHAT
+        <td><button type="button" class="btn btn-info btn-xs start_chat" data-touserid="'.$row['user_id'].'" data-tousername="'.$row['username'].'">START CHAT
         </button></td>
     </tr>
     ';
