@@ -59,6 +59,7 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
 
         fetch_user();
 
+        //every 5 seconds run these functions
         setInterval(function(){
             update_last_activity();
             fetch_user();
