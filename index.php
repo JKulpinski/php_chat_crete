@@ -57,16 +57,16 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
 <script>
     $(document).ready(function(){
 
-        fetch_user();
+        fetchUser();
 
         //every 5 seconds run these functions
         setInterval(function(){
-            update_last_activity();
-            fetch_user();
+            updateActivity();
+            fetchUser();
             updateChat();
         }, 5000);
 
-        function fetch_user()
+        function fetchUser()
         {
             $.ajax({
                 url:"takeUsers.php",
@@ -77,7 +77,7 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
             })
         }
 
-        function update_last_activity()
+        function updateActivity()
         {
             $.ajax({
                 url:"updateLastActivity.php",
@@ -88,7 +88,7 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
             })
         }
 
-        function make_chat_dialog_box(toUserId, toUserName)
+        function makeChatDialogBox(toUserId, toUserName)
         {
             let dialog = '<div id="user_dialog_'+toUserId+'" class="user_dialog" title="You have chat with '+toUserName+'">';
             dialog += '<div style="height:450px; border:1px solid #91e2ff; overflow-y: scroll; margin-bottom:22px; padding:18px;" class="chat_history" data-touserid="'+toUserId+'" id="chat_history_'+toUserId+'">';
@@ -99,14 +99,14 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
         }
 
         $(document).on('click', '.start_chat', function(){
-            let to_user_id = $(this).data('touserid');
-            let to_user_name = $(this).data('tousername');
-            make_chat_dialog_box(to_user_id, to_user_name);
-            $("#user_dialog_"+to_user_id).dialog({
+            let toUserId = $(this).data('touserid');
+            let toUserName = $(this).data('tousername');
+            makeChatDialogBox(toUserId, toUserName);
+            $("#user_dialog_"+toUserId).dialog({
                 autoOpen:false,
                 width:400
             });
-            $('#user_dialog_'+to_user_id).dialog('open');
+            $('#user_dialog_'+toUserId).dialog('open');
         });
 
         $(document).on('click', '.send_chat', function(){
@@ -143,6 +143,30 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
 
         $(document).on('click', '.ui-button-icon', function(){
             $('.user_dialog').dialog('destroy').remove();
+        });
+
+        $(document).on('focus', '.chat_message', function(){
+           let typing = true;
+           $.ajax({
+               url:"updateTypeStatus.php",
+               method:"POST",
+               data:{is_type:typing},
+               success:function(){
+
+               }
+           })
+        });
+
+        $(document).on('blur', '.chat_message', function(){
+            let typing = false;
+            $.ajax({
+                url:"updateTypeStatus.php",
+                method:"POST",
+                data:{is_type:typing},
+                success:function(){
+
+                }
+            })
         });
 
     });

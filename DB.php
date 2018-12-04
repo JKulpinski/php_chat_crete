@@ -91,3 +91,20 @@ function countUnseenMessage($fromUserId, $toUserId, $connect)
     }
     return $output;
 }
+
+function typingStatus($userId, $connect){
+    $query = "
+    SELECT is_type FROM login_details WHERE user_id = '".$userId."' ORDER BY last_activity DESC LIMIT 1
+    ";
+
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $output = '';
+    foreach ($result as $row) {
+        if ($row["is_type"]==true){
+            $output = ' - <small><em><span class="text-muted">Typing...</span></em></small>';
+        }
+    }
+    return $output;
+}
