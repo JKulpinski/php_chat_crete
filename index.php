@@ -141,6 +141,10 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
             });
         }
 
+        $(document).on('click', '.ui-button-icon', function(){
+            $('.user_dialog').dialog('destroy').remove();
+        });
+
     });
 </script>
 
