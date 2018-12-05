@@ -92,6 +92,7 @@ function countUnseenMessage($fromUserId, $toUserId, $connect)
     return $output;
 }
 
+//ze ma status piszacego
 function typingStatus($userId, $connect){
     $query = "
     SELECT is_type FROM login_details WHERE user_id = '".$userId."' ORDER BY last_activity DESC LIMIT 1
@@ -102,7 +103,7 @@ function typingStatus($userId, $connect){
     $result = $statement->fetchAll();
     $output = '';
     foreach ($result as $row) {
-        if ($row["is_type"]==true){
+        if ($row["is_type"] == 'yes') {
             $output = ' - <small><em><span class="text-muted">Typing...</span></em></small>';
         }
     }

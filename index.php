@@ -93,7 +93,7 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
             let dialog = '<div id="user_dialog_'+toUserId+'" class="user_dialog" title="You have chat with '+toUserName+'">';
             dialog += '<div style="height:450px; border:1px solid #91e2ff; overflow-y: scroll; margin-bottom:22px; padding:18px;" class="chat_history" data-touserid="'+toUserId+'" id="chat_history_'+toUserId+'">';
             dialog += fetchUserChatHistory(toUserId);
-            dialog += '</div> <div class="form-group"> <textarea name="chat_message_'+toUserId+'" id="chat_message_'+toUserId+'" class="form-control"></textarea>';
+            dialog += '</div> <div class="form-group"> <textarea name="chat_message_' + toUserId + '" id="chat_message_' + toUserId + '" class="form-control chat_message"></textarea>';
             dialog += '</div> <div class="form-group" align="right"> <button type="button" name="send_chat" id="'+toUserId+'" class="btn btn-info send_chat">Send</button></div></div>';
             $('#user_model_details').html(dialog);
         }
@@ -141,12 +141,13 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
             });
         }
 
+        //usuwa okno wiadomosci
         $(document).on('click', '.ui-button-icon', function(){
             $('.user_dialog').dialog('destroy').remove();
         });
-
+        //informacja o tym ze rozmowca pisze cos
         $(document).on('focus', '.chat_message', function(){
-           let typing = true;
+            let typing = 'yes';
            $.ajax({
                url:"updateTypeStatus.php",
                method:"POST",
@@ -156,9 +157,9 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
                }
            })
         });
-
+        //jesli przestanie pisac
         $(document).on('blur', '.chat_message', function(){
-            let typing = false;
+            let typing = 'no';
             $.ajax({
                 url:"updateTypeStatus.php",
                 method:"POST",
