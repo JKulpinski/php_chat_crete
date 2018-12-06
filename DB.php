@@ -103,7 +103,7 @@ function typingStatus($userId, $connect){
     $result = $statement->fetchAll();
     $output = '';
     foreach ($result as $row) {
-        if ($row["is_type"] == 'yes') {
+        if ($row["is_type"] == 'y') {
             $output = ' - <small><em><span class="text-muted">Typing...</span></em></small>';
         }
     }

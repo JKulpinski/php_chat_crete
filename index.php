@@ -30,7 +30,6 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
     <link rel="icon" href="favicon.ico"/>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
     <title>Chat Application using Jquery</title>
-    <script src="script.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -57,16 +56,28 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
 <script>
     $(document).ready(function(){
 
-        fetchUser();
+        takeUsers();
 
         //every 5 seconds run these functions
         setInterval(function(){
             updateActivity();
-            fetchUser();
+            takeUsers();
             updateChat();
         }, 5000);
 
-        function fetchUser()
+        //open dialog box and start chat with person
+        $(document).on('click', '.start_chat', function(){
+            let toUserId = $(this).data('touserid');
+            let toUserName = $(this).data('tousername');
+            makeChatDialogBox(toUserId, toUserName);
+            $("#user_dialog_"+toUserId).dialog({
+                autoOpen:false,
+                width:400
+            });
+            $('#user_dialog_'+toUserId).dialog('open');
+        });
+
+        function takeUsers()
         {
             $.ajax({
                 url:"takeUsers.php",
@@ -83,7 +94,6 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
                 url:"updateLastActivity.php",
                 success:function()
                 {
-
                 }
             })
         }
@@ -98,31 +108,6 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
             $('#user_model_details').html(dialog);
         }
 
-        $(document).on('click', '.start_chat', function(){
-            let toUserId = $(this).data('touserid');
-            let toUserName = $(this).data('tousername');
-            makeChatDialogBox(toUserId, toUserName);
-            $("#user_dialog_"+toUserId).dialog({
-                autoOpen:false,
-                width:400
-            });
-            $('#user_dialog_'+toUserId).dialog('open');
-        });
-
-        $(document).on('click', '.send_chat', function(){
-            let toUserId = $(this).attr('id');
-            let chatMessage = $('#chat_message_' + toUserId).val();
-            $.ajax({
-                url:"insertChat.php",
-                method: "POST",
-                data:{to_user_id:toUserId,chat_message:chatMessage},
-                success:function(data){
-                    $('#chat_message_'+toUserId).val('');
-                    $('#chat_history_'+toUserId).html(data);
-                }
-            })
-        })
-
         function fetchUserChatHistory(toUserId){
             $.ajax({
                 url:"fetchUserChatHistory.php",
@@ -136,40 +121,55 @@ if(!isset($_SESSION['user_id'])){ // if user isn't login yet it redirect him to 
 
         function updateChat(){
             $('.chat_history').each(function(){
-               let toUserId = $(this).data('touserid');
-               fetchUserChatHistory(toUserId);
+                let toUserId = $(this).data('touserid');
+                fetchUserChatHistory(toUserId);
             });
         }
 
-        //usuwa okno wiadomosci
+        //sending message to person
+        $(document).on('click', '.send_chat', function(){
+            let toUserId = $(this).attr('id');
+            let chatMessage = $('#chat_message_' + toUserId).val();
+            $.ajax({
+                url:"insertChat.php",
+                method: "POST",
+                data:{to_user_id:toUserId,chat_message:chatMessage},
+                success:function(data){
+                    $('#chat_message_'+toUserId).val('');
+                    $('#chat_history_'+toUserId).html(data);
+                }
+            })
+        });
+
+        //remove message window
         $(document).on('click', '.ui-button-icon', function(){
             $('.user_dialog').dialog('destroy').remove();
         });
-        //informacja o tym ze rozmowca pisze cos
+
+        //show info if someone is typing now
         $(document).on('focus', '.chat_message', function(){
-            let typing = 'yes';
+            let typing = 'y';
            $.ajax({
                url:"updateTypeStatus.php",
                method:"POST",
                data:{is_type:typing},
                success:function(){
-
                }
            })
         });
-        //jesli przestanie pisac
+
+        //when someone stop typing
         $(document).on('blur', '.chat_message', function(){
-            let typing = 'no';
+            let typing = 'n';
             $.ajax({
                 url:"updateTypeStatus.php",
                 method:"POST",
                 data:{is_type:typing},
                 success:function(){
-
                 }
             })
         });
-
     });
+
 </script>
 
