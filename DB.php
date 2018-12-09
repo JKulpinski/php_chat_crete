@@ -53,9 +53,9 @@ function fetchUserChatHistory($fromUserId, $toUserId, $connect)
     }
     $output .= '</ul>';
     $query = "
-    UPDATE chat_message SET status = '0' WHERE from_user_id = '".$toUserId."' AND  to_user_id = '".$fromUserId."' AND status = '1'
+    UPDATE chat_message SET status = '0' WHERE from_user_id = '" . $toUserId . "' AND  to_user_id = '" . $fromUserId . "' AND status = '1'
     ";
-    $statement = $connect -> prepare($query);
+    $statement = $connect->prepare($query);
     $statement->execute();
     return $output;
 }
@@ -85,17 +85,17 @@ function countUnseenMessage($fromUserId, $toUserId, $connect)
     $statement->execute();
     $count = $statement->rowCount();
     $output = '';
-    if($count > 0)
-    {
-        $output = '<span class="label label-success">'.$count.'</span>';
+    if ($count > 0) {
+        $output = '<span class="label label-success">' . $count . '</span>';
     }
     return $output;
 }
 
 //ze ma status piszacego
-function typingStatus($userId, $connect){
+function typingStatus($userId, $connect)
+{
     $query = "
-    SELECT is_type FROM login_details WHERE user_id = '".$userId."' ORDER BY last_activity DESC LIMIT 1
+    SELECT is_type FROM login_details WHERE user_id = '" . $userId . "' ORDER BY last_activity DESC LIMIT 1
     ";
 
     $statement = $connect->prepare($query);
@@ -108,4 +108,37 @@ function typingStatus($userId, $connect){
         }
     }
     return $output;
+}
+
+function fetchGroupChatHistory($connect)
+{
+    $query = "
+ SELECT * FROM chat_message
+ WHERE to_user_id = '0'
+ ORDER BY timestamp DESC
+ ";
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    //here we are all messages
+    $result = $statement->fetchAll();
+    $output = '<ul class="list-unstyled">'; //bootstrap class
+
+    foreach ($result as $row) {
+        $userName = '';
+        if ($row["from_user_id"] == $_SESSION["user_id"]) {
+            $userName = '<b class="text">You</b>';
+        } else {
+            $userName = '<b class="text">' .getUserName($row['from_user_id'], $connect).'</b>';
+        }
+        $output .= '<li style="border-bottom:1px dotted #ccc">
+               <p>'.$userName.' - '.$row["chat_message"].'
+                  <div align="right">
+            -<small><em>'.$row['timestamp'].'</em></small>
+            </div>
+            </p>
+            </li>
+            ';
+    }
+        $output .= '</ul>';
+        return $output;
 }
