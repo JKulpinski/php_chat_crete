@@ -20,8 +20,8 @@ if($_POST["action"] == "insert_data")
 
     $query = "
  INSERT INTO chat_message 
- (from_user_id, chat_message, status) 
- VALUES (:from_user_id, :chat_message, :status)
+ (from_user_id, to_user_id, chat_message, status) 
+ VALUES (:from_user_id,'0', :chat_message, :status)
  ";
 
     $statement = $connect->prepare($query);

@@ -29,7 +29,7 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
     <!--    <link rel="stylesheet" type="text/css" href="style.css"/>-->
     <link rel="icon" href="favicon.ico"/>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-    <title>Chat Application using Jquery</title>
+    <title>Heraklion Chat</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
