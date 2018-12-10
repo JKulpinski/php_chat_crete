@@ -45,7 +45,11 @@ foreach ($result as $row){
         </button></td>
     </tr>
     ';
+    if (countUnseenMessage($row['user_id'],$_SESSION['user_id'], $connect)>0){
+        alert("You have unseen messages");
+    }
 }
 $out .= '</table>';
+
 
 echo $out;

@@ -229,6 +229,12 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
                 })
             }
         }
+
+        $("#notification").fadeIn("slow").append('your message');
+        $(".dismiss").click(function(){
+            $("#notification").fadeOut("slow");
+        });
+
     });
 
 </script>
