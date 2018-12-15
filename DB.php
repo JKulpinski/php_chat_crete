@@ -145,15 +145,19 @@ function fetchGroupChatHistory($connect)
 
 function insertData($userId, $connect){
     $query = "
-    SELECT * FROM groupchat WHERE login_id= '" . $userId . "';
+    SELECT chatName FROM groupchat WHERE login_id= '" . $userId . "';
     ";
 
     $statement = $connect->prepare($query);
     $statement->execute();
     $count = $statement->rowCount();
-    $output = 0;
-    if ($count > 0) {
-        $output = 1;
+    $result = $statement->fetchAll();
+    $output = '';
+        if ($count > 0) {
+            foreach ($result as $row) {
+            $output .=
+                '<button type="button" name=' .$row['chatName']. 'id=' .$row['chatName']. ' class="btn btn-warning">' .$row['chatName']. '</button>';
+        }
     }
     return $output;
 }

@@ -48,12 +48,11 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
             <br><a href="logout.php" class="btn btn-danger">Logout</a></p>
 
         <input type="hidden" id="is_active_group_chat_window" value="no"/>
-        <button type="button" name="group_chat" id="group_chat" class="btn btn-warning">Group Chat</button>
+        <div name="group_chat" id="group_chat">Group Chat</div>
         <input type="hidden" id="is_active_create_chat_window" value="no"/>
         <button type="button" name="group_custom_chat" id="group_custom_chat" class="btn btn-success">Create new group
             Chat
         </button>
-
         <h4 align="center">Users:</h4>
         <div id="user_details"></div>
         <div id="user_model_details"></div>
@@ -93,6 +92,7 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
 
         takeUsers();
         checkUsersforGroupChat();
+        showGroupChat();
         var flag=0;
 
         //every 5 seconds run these functions
@@ -288,8 +288,10 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
                 method: "POST",
                 data: {to_user_id: toUserId},
                 success: function (data) {
-                        if (data==1) {
+                        if (data!='') {
+                            $('#group_chat').val('');
                             $('#group_chat').show();
+                            $('#group_chat').html(data);
                         }
                         else{
                             $('#group_chat').hide();
