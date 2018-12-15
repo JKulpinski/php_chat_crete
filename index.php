@@ -93,15 +93,16 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
 
         takeUsers();
         checkUsersforGroupChat();
-        $('#group_chat').hide();    /////
+        var flag=0;
 
         //every 5 seconds run these functions
         setInterval(function () {
             updateActivity();
             takeUsers();
+            showGroupChat();
             updateChat();
             fetchGroupChatHistory();
-        }, 5000);
+        }, 2000);
 
         setInterval(function () {
             checkUsersforGroupChat();
@@ -281,10 +282,26 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
             }
         }
 
-        $("#notification").fadeIn("slow").append('your message');
-        $(".dismiss").click(function(){
-            $("#notification").fadeOut("slow");
-        });
+        function showGroupChat1(toUserId) {
+            $.ajax({
+                url: "showGroupChat.php",
+                method: "POST",
+                data: {to_user_id: toUserId},
+                success: function (data) {
+                        if (data==1) {
+                            $('#group_chat').show();
+                        }
+                        else{
+                            $('#group_chat').hide();
+                        }
+                }
+            })
+        }
+
+        function showGroupChat() {
+            let toUserId = $(this).data('touserid');
+            showGroupChat1(toUserId);
+        }
 
     });
 

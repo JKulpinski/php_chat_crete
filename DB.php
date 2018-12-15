@@ -142,3 +142,18 @@ function fetchGroupChatHistory($connect)
         $output .= '</ul>';
         return $output;
 }
+
+function insertData($userId, $connect){
+    $query = "
+    SELECT * FROM groupchat WHERE login_id= '" . $userId . "';
+    ";
+
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    $count = $statement->rowCount();
+    $output = 0;
+    if ($count > 0) {
+        $output = 1;
+    }
+    return $output;
+}
