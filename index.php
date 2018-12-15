@@ -49,6 +49,10 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
 
         <input type="hidden" id="is_active_group_chat_window" value="no"/>
         <button type="button" name="group_chat" id="group_chat" class="btn btn-warning">Group Chat</button>
+        <input type="hidden" id="is_active_create_chat_window" value="no"/>
+        <button type="button" name="group_custom_chat" id="group_custom_chat" class="btn btn-success">Create new group
+            Chat
+        </button>
 
         <h4 align="center">Users:</h4>
         <div id="user_details"></div>
@@ -68,6 +72,19 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
         <button type="button" name="send_group_chat" id="send_group_chat" class="btn btn-info">Send</button>
     </div>
 </div>
+
+<div id="create_chat_dialog" title="Creating Group Chat">
+    <div id="create_group_window">
+        Select group members:
+        <div id="custom_chat_users"></div>
+    </div>
+    <!--    <div class="form-group">-->
+    <!--        <textarea name="group_name" id="group_chat_message" class="form-control"> </textarea>-->
+    <!--    </div>-->
+    <div class="form-group" align="right">
+        <button type="button" name="accept_group_chat" id="accept_group_chat" class="btn btn-info">Create group</button>
+    </div>
+
 </body>
 </html>
 
@@ -75,6 +92,8 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
     $(document).ready(function () {
 
         takeUsers();
+        checkUsersforGroupChat();
+        $('#group_chat').hide();    /////
 
         //every 5 seconds run these functions
         setInterval(function () {
@@ -83,6 +102,10 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
             updateChat();
             fetchGroupChatHistory();
         }, 5000);
+
+        setInterval(function () {
+            checkUsersforGroupChat();
+        }, 120000);
 
         //open dialog box and start chat with person
         $(document).on('click', '.start_chat', function () {
@@ -102,6 +125,16 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
                 method: "POST",
                 success: function (data) {
                     $('#user_details').html(data);
+                }
+            })
+        }
+
+        function checkUsersforGroupChat() {
+            $.ajax({
+                url: "checkUsersforGroupChat.php",
+                method: "POST",
+                success: function (data) {
+                    $('#custom_chat_users').html(data);
                 }
             })
         }
@@ -191,11 +224,29 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
             width: 400
         });
 
+        //it create custom group chat    //////
+        $('#accept_group_chat').click(function () {
+            $('#group_chat').show();
+            $('#create_chat_dialog').dialog('close');
+            $('#is_active_create_chat_window').val('no');
+        });
+
         //open group chat when we click button
         $('#group_chat').click(function () {
             $('#group_chat_dialog').dialog('open');
             $('#is_active_group_chat_window').val('yes');
             fetchGroupChatHistory();
+        });
+
+        $('#create_chat_dialog').dialog({
+            autoOpen: false,
+            width: 600
+        });
+
+        $('#group_custom_chat').click(function () {
+            $('#create_chat_dialog').dialog('open');
+            $('#is_active_create_chat_window').val('yes');
+            //fetchGroupChatHistory();
         });
 
         //sending message to group
