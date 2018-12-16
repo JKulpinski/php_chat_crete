@@ -125,19 +125,31 @@ function fetchGroupChatHistory($connect)
 
     foreach ($result as $row) {
         $userName = '';
-        if ($row["from_user_id"] == $_SESSION["user_id"]) {
-            $userName = '<b class="text">You</b>';
-        } else {
-            $userName = '<b class="text">' .getUserName($row['from_user_id'], $connect).'</b>';
-        }
-        $output .= '<li style="border-bottom:1px dotted #ccc">
-               <p>'.$userName.' - '.$row["chat_message"].'
+        if ($row["from_user_id"] != '0') {
+            if ($row["from_user_id"] == $_SESSION["user_id"]) {
+                $userName = '<b class="text">You</b>';
+            } else {
+                $userName = '<b class="text">' . getUserName($row['from_user_id'], $connect) . '</b>';
+            }
+            $output .= '<li style="border-bottom:1px dotted #ccc">
+               <p>' . $userName . ' - ' . $row["chat_message"] . '
                   <div align="right">
-            -<small><em>'.$row['timestamp'].'</em></small>
+            -<small><em>' . $row['timestamp'] . '</em></small>
             </div>
             </p>
             </li>
             ';
+        }
+        else {
+            $output .= '<li style="border-bottom:1px dotted #ccc">
+               <p>' . $userName . ' <center> <b> ' . $row["chat_message"] . ' </b> </center>
+                  <div align="right">
+            -<small><em>' . $row['timestamp'] . '</em></small>
+            </div>
+            </p>
+            </li>
+            ';
+        }
     }
         $output .= '</ul>';
         return $output;
@@ -156,7 +168,7 @@ function insertData($userId, $connect){
         if ($count > 0) {
             foreach ($result as $row) {
             $output .=
-                '<button type="button" name=' .$row['chatName']. 'id=' .$row['chatName']. ' class="btn btn-warning">' .$row['chatName']. '</button>';
+                '<button type="button" name=' .$row['chatName']. ' id=' .$row['chatName']. ' class="btn btn-warning">' .$row['chatName']. '</button>';
         }
     }
     return $output;
@@ -177,7 +189,7 @@ function insertMessages($userId, $connect){
             $output .=
                 '
         <input id="is_active_create_chat_window" value="no"/>
-        <button type="button" name=' .$row['chatName']. 'id=' .$row['chatName']. ' class="btn btn-warning">' .$row['chatName']. '</button>';
+        <button type="button" name=' .$row['chatName']. ' id=' .$row['chatName']. ' class="btn btn-warning">' .$row['chatName']. '</button>';
         }
     }
     return $output;
