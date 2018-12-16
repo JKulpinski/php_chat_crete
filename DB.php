@@ -161,3 +161,24 @@ function insertData($userId, $connect){
     }
     return $output;
 }
+
+function insertMessages($userId, $connect){
+    $query = "
+    SELECT chatName FROM groupchat WHERE login_id= '" . $userId . "';
+    ";
+
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    $count = $statement->rowCount();
+    $result = $statement->fetchAll();
+    $output = '';
+    if ($count > 0) {
+        foreach ($result as $row) {
+            $output .=
+                '
+        <input id="is_active_create_chat_window" value="no"/>
+        <button type="button" name=' .$row['chatName']. 'id=' .$row['chatName']. ' class="btn btn-warning">' .$row['chatName']. '</button>';
+        }
+    }
+    return $output;
+}

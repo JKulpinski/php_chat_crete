@@ -17,7 +17,7 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
 ?>
 
 <!DOCTYPE HTML>
-<html lang="en-EN">
+<html lang="en-EN" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta name="Author" content="Natalia Pasturczak & Jonasz Kulpinski"/>
     <meta name="keywords" content="jquery, html, js"/>
@@ -77,13 +77,15 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
         Select group members:
         <div id="custom_chat_users"></div>
     </div>
-    <!--    <div class="form-group">-->
-    <!--        <textarea name="group_name" id="group_chat_message" class="form-control"> </textarea>-->
-    <!--    </div>-->
     <div class="form-group" align="right">
+        <form>
+            Chat name:
+        <input type="text" name="chatName">
+        </form>
+        <br>
         <button type="button" name="accept_group_chat" id="accept_group_chat" class="btn btn-info">Create group</button>
     </div>
-
+</div>
 </body>
 </html>
 
@@ -188,6 +190,26 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
                     $('#chat_history_' + toUserId).html(data);
                 }
             })
+        });
+
+        $(document).on('click', '#accept_group_chat', function () {
+            let toUserId = $(this).attr('id');
+            $('#create_chat_dialog').hide();
+            let chatName = $("input:text").val();
+            $("input:text").val("");
+
+            $('#test').click(function() {
+                alert("Checkbox state (method 1) = " + $('#test').prop('checked'));
+                alert("Checkbox state (method 2) = " + $('#test').is(':checked'));
+            });
+            // $.ajax({
+            //     url: "addGroupChat.php",
+            //     method: "POST",
+            //     data: {chatName: chatName, to_user_id: toUserId},
+            //     success: function (data) {
+            //         showGroupChat();
+            //     }
+            // })
         });
 
         //remove message window
@@ -304,7 +326,6 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
             let toUserId = $(this).data('touserid');
             showGroupChat1(toUserId);
         }
-
     });
 
 </script>
