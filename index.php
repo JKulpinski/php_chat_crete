@@ -39,7 +39,7 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
 <div class="container">
     <br/>
 
-    <h3 align="center">Heraklion Chat</h3><br/>
+    <h2 align="center">Heraklion Chat</h2><br/>
     <br/>
 
     <div class="table-responsive">
@@ -97,18 +97,21 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
         showGroupChat();
         var flag=0;
 
-        //every 5 seconds run these functions
+        //every 2 seconds run these functions
         setInterval(function () {
             updateActivity();
             takeUsers();
             showGroupChat();
             updateChat();
             fetchGroupChatHistory();
+            //$('#kicia').css("background-color", "yellow");
         }, 2000);
 
         setInterval(function () {
             checkUsersforGroupChat();
         }, 120000);
+
+        //$('#'+toUserName).css("background-color", "blue");
 
         //open dialog box and start chat with person
         $(document).on('click', '.start_chat', function () {
@@ -151,7 +154,7 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
         }
 
         function makeChatDialogBox(toUserId, toUserName) {
-            let dialog = '<div id="user_dialog_' + toUserId + '" class="user_dialog" title="You have chat with ' + toUserName + '">';
+            let dialog = '<div id="user_dialog_' + toUserId + '" class="user_dialog" title="Chat with ' + toUserName + '">';
             dialog += '<div style="height:450px; border:1px solid #91e2ff; overflow-y: scroll; margin-bottom:22px; padding:18px;" class="chat_history" data-touserid="' + toUserId + '" id="chat_history_' + toUserId + '">';
             dialog += fetchUserChatHistory(toUserId);
             dialog += '</div> <div class="form-group"> <textarea name="chat_message_' + toUserId + '" id="chat_message_' + toUserId + '" class="form-control chat_message"></textarea>';

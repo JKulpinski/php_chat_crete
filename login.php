@@ -70,7 +70,7 @@ if (isset($_POST['login'])) { // when press submit button
 <div class="container">
     <br/>
 
-    <h3 align="center">Heraklion Chat</a></h3><br/>
+    <h2 align="center">Heraklion Chat</a></h2><br/>
     <br/>
     <div class="panel panel-default">
         <div class="panel-heading">Chat Application Login</div>
@@ -88,8 +88,8 @@ if (isset($_POST['login'])) { // when press submit button
                 <div class="form-group">
                     <input type="submit" name="login" class="btn btn-info" value="Login"/>
                 </div>
-                <div align="center">
-                    <a href="register.php">Register</a>
+                <div>
+                    <a class="btn btn-warning" href="register.php">Register</a>
                 </div>
             </form>
         </div>

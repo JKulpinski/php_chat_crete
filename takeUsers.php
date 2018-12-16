@@ -36,12 +36,15 @@ foreach ($result as $row){
     else{
         $status = '<span class="label label-danger">Offline</span>';
     }
-
+    $info = '';
+    if (countUnseenMessage($row['user_id'], $_SESSION['user_id'], $connect) != '') {
+        $info = "background-color: #C5E1B6";
+    }
     $out .= '
-    <tr>
+    <tr id="' . $row['username'] . '" style="' . $info . '">
         <td>'.$row['username'].' '.countUnseenMessage($row['user_id'],$_SESSION['user_id'], $connect).' '.typingStatus($row['user_id'],$connect).'</td>
         <td>'.$status.'</td>
-        <td><button type="button" class="btn btn-info btn-xs start_chat" data-touserid="'.$row['user_id'].'" data-tousername="'.$row['username'].'">START CHAT
+        <td><button type="button" class="btn btn-primary btn-xs start_chat" data-touserid="' . $row['user_id'] . '" data-tousername="' . $row['username'] . '">START CHAT
         </button></td>
     </tr>
     ';

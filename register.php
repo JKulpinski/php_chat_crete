@@ -75,7 +75,7 @@ if (isset($_POST["register"])) {
 <div class="container">
     <br/>
 
-    <h3 align="center">Heraklion Chat</a></h3><br/>
+    <h2 align="center">Heraklion Chat</a></h2><br/>
     <br/>
     <div class="panel panel-default">
         <div class="panel-heading">Heraklion Chat Register</div>
@@ -97,8 +97,8 @@ if (isset($_POST["register"])) {
                 <div class="form-group">
                     <input type="submit" name="register" class="btn btn-info" value="Register"/>
                 </div>
-                <div align="center">
-                    <a href="login.php">Login</a>
+                <div>
+                    <a class="btn btn-warning" href="login.php">Back to login</a>
                 </div>
             </form>
         </div>
