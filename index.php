@@ -193,33 +193,36 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
         });
 
         $(document).on('click', '#accept_group_chat', function () {
-            let toUserId = $(this).attr('id');
+            let login_id = $(this).attr('id');
             $('#create_chat_dialog').hide();
             let chatName = $("input:text").val();
             $("input:text").val("");
-
-
-            getCheckBoxValues();
-                //alert("Checkbox state (method 2) = " + $("input:checkbox").is(':checked'));
-
+            let action = "current_user";
 
             $.ajax({
                 url: "addGroupChat.php",
                 method: "POST",
-                data: {chatName: chatName, to_user_id: toUserId},
+                data: {chatName: chatName, login_id: login_id, action: action},
                 success: function (data) {
                     showGroupChat();
                 }
             })
-        });
 
-        function getCheckBoxValues(){
             $('input:checkbox').each( function (){
                 if($(this).is(':checked') == true){
-                    alert($(this).val());
+                    let login_id = $(this).val();
+                    let action = "";
+                    $.ajax({
+                        url: "addGroupChat.php",
+                        method: "POST",
+                        data: {chatName: chatName, login_id: login_id, action: action},
+                        success: function (data) {
+                            showGroupChat();
+                        }
+                    })
                 }
             });
-        }
+        });
 
         //remove message window
         $(document).on('click', '.ui-button-icon', function () {

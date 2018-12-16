@@ -36,7 +36,7 @@ foreach ($result as $row) {
     $out .= '
     <tr>
         <td>' . $row['username'] . ' ' . countUnseenMessage($row['user_id'], $_SESSION['user_id'], $connect) . ' ' . typingStatus($row['user_id'], $connect) . '</td>
-        <td><input type="checkbox" value="$row[\'user_id\']"></td>
+        <td><input type="checkbox" value="'.$row['user_id'].'"></td>
     </tr>
     ';
 }

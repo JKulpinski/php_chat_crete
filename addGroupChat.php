@@ -6,18 +6,35 @@
  * Time: 16:23
  */
 
-include ('DB.php');
+include('DB.php');
 session_start();
 
-$data = array(
-    ':login_id' => $_SESSION['user_id'],
-    ':chatName' => $_POST['chatName']
-);
+if ($_POST["action"] == "current_user") {
 
-$query = "
- INSERT INTO groupchat(chatName, login_id, chat_message_id) 
- VALUES (:chatName,:login_id, '0')
+    $data = array(
+        ':chatName' => $_POST['chatName'],
+        'login_id_current' => $_SESSION['user_id'],
+    );
+
+    $query = "
+  INSERT INTO groupchat(chatName, login_id) 
+ VALUES (:chatName,:login_id_current); 
  ";
 
-$statement = $connect->prepare($query);
-$statement->execute($data);
+    $statement = $connect->prepare($query);
+    $statement->execute($data);
+
+} else {
+    $data = array(
+        ':chatName' => $_POST['chatName'],
+        ':login_id' => $_POST['login_id']
+    );
+
+    $query = "
+ INSERT INTO groupchat(chatName, login_id) 
+ VALUES (:chatName,:login_id); 
+ ";
+
+    $statement = $connect->prepare($query);
+    $statement->execute($data);
+}
