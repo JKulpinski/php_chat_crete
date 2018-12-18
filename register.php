@@ -65,7 +65,7 @@ if (isset($_POST["register"])) {
 
 <html>
 <head>
-    <title>Heraklion Chat</title>
+    <title>Feedback Chat</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -75,10 +75,10 @@ if (isset($_POST["register"])) {
 <div class="container">
     <br/>
 
-    <h2 align="center">Heraklion Chat</a></h2><br/>
+    <h2 align="center">Feedback Chat</a></h2><br/>
     <br/>
     <div class="panel panel-default">
-        <div class="panel-heading">Heraklion Chat Register</div>
+        <div class="panel-heading">Feedback Chat Register</div>
         <div class="panel-body">
             <form method="post">
                 <span class="text-danger"><?php echo $message; ?></span>

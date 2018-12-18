@@ -26,10 +26,10 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
     <!--show on mobile devices-->
     <meta name="viewpoint" content="width=device-width, initial-scale=1.0"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
-    <!--    <link rel="stylesheet" type="text/css" href="style.css"/>-->
+    <!--        <link rel="stylesheet" type="text/css" href="style.css"/>-->
     <link rel="icon" href="favicon.ico"/>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-    <title>Heraklion Chat</title>
+    <title>Feedback Chat</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -39,14 +39,15 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
 <div class="container">
     <br/>
 
-    <h2 align="center">Heraklion Chat</h2><br/>
-    <br/>
 
     <div class="table-responsive">
         <p align="right">Welcome, <?php echo $_SESSION['username']; ?> <!--<?php echo $cos ?> -->!
 
             <br><a href="logout.php" class="btn btn-danger">Logout</a></p>
 
+        <h2 align="center">Feedback Chat</h2><br/>
+        <br/>
+        <h4 align="center">Groups:</h4>
         <input type="hidden" id="is_active_group_chat_window" value="no"/>
         <div name="group_chat" id="group_chat">Group Chat</div>
         <input type="hidden" id="is_active_create_chat_window" value="no"/>

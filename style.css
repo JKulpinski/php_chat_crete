@@ -1,4 +1,8 @@
 /* CSS Document */
+* {
+    background-color: #cc5734;
+}
+
 body {
     font:12px arial;
     color: #222;

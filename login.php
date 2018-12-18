@@ -70,7 +70,7 @@ if (isset($_POST['login'])) { // when press submit button
 <div class="container">
     <br/>
 
-    <h2 align="center">Heraklion Chat</a></h2><br/>
+    <h2 align="center">Feedback Chat</a></h2><br/>
     <br/>
     <div class="panel panel-default">
         <div class="panel-heading">Chat Application Login</div>
