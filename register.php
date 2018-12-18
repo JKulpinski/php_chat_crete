@@ -97,7 +97,7 @@ if (isset($_POST["register"])) {
                 <div class="form-group">
                     <input type="submit" name="register" class="btn btn-info" value="Register"/>
                 </div>
-                <div>
+                <div align="right">
                     <a class="btn btn-warning" href="login.php">Back to login</a>
                 </div>
             </form>

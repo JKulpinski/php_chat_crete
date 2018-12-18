@@ -67,8 +67,11 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
     <div class="form-group">
         <textarea name="group_chat_message" id="group_chat_message" class="form-control"> </textarea>
     </div>
-    <div class="form-group" align="right">
-        <button type="button" name="send_group_chat" id="send_group_chat" class="btn btn-info">Send</button>
+    <div class="form-group">
+        <button type="button" name="leave_group_chat" id="leave_group_chat" class="btn btn-danger">Leave</button>
+        <button type="button" style="float: right" name="send_group_chat" id="send_group_chat" class="btn
+            btn-info">Send
+        </button>
     </div>
 </div>
 
@@ -80,7 +83,7 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
     <div class="form-group" align="right">
         <form>
             Chat name:
-        <input type="text" name="chatName">
+            <input type="text" name="chatName">
         </form>
         <br>
         <button type="button" name="accept_group_chat" id="accept_group_chat" class="btn btn-info">Create group</button>
@@ -95,7 +98,7 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
         takeUsers();
         checkUsersforGroupChat();
         showGroupChat();
-        var flag=0;
+        var flag = 0;
 
         //every 2 seconds run these functions
         setInterval(function () {
@@ -195,6 +198,21 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
             })
         });
 
+        $(document).on('click', '#leave_group_chat', function () {
+            let login_id = $(this).attr('id');
+            $('#create_chat_dialog').hide();
+            $('#group_chat_dialog').dialog('close');
+            $('#is_active_group_chat_window').val('no');
+            $.ajax({
+                url: "removeFromGroupChat.php",
+                method: "POST",
+                data: {login_id: login_id},
+                success: function (data) {
+                    showGroupChat();
+                }
+            })
+        });
+
         $(document).on('click', '#accept_group_chat', function () {
             let login_id = $(this).attr('id');
             $('#create_chat_dialog').hide();
@@ -211,10 +229,10 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
                 }
             })
 
-            $('input:checkbox').each( function (){
-                if($(this).is(':checked') == true){
+            $('input:checkbox').each(function () {
+                if ($(this).is(':checked') == true) {
                     let login_id = $(this).val();
-                    let action = "";
+                    let action = "add_user";
                     $.ajax({
                         url: "addGroupChat.php",
                         method: "POST",
@@ -296,7 +314,7 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
                     url: "groupChat.php",
                     method: "POST",
                     data: {chat_message: chatMessage, action: action},
-                    success: function(data){
+                    success: function (data) {
                         $('#group_chat_message').val('');
                         $('#group_chat_history').html(data);
                     }
@@ -312,7 +330,7 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
                     url: "groupChat.php",
                     method: "POST",
                     data: {action: action},
-                    success: function(data){
+                    success: function (data) {
                         $('#group_chat_history').html(data);
                     }
                 })
@@ -325,14 +343,14 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
                 method: "POST",
                 data: {to_user_id: toUserId},
                 success: function (data) {
-                        if (data!='') {
-                            $('#group_chat').val('');
-                            $('#group_chat').show();
-                            $('#group_chat').html(data);
-                        }
-                        else{
-                            $('#group_chat').hide();
-                        }
+                    if (data != '') {
+                        $('#group_chat').val('');
+                        $('#group_chat').show();
+                        $('#group_chat').html(data);
+                    }
+                    else {
+                        $('#group_chat').hide();
+                    }
                 }
             })
         }

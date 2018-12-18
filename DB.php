@@ -125,7 +125,17 @@ function fetchGroupChatHistory($connect)
 
     foreach ($result as $row) {
         $userName = '';
-        if ($row["from_user_id"] != '0') {
+        if ($row["from_user_id"] == '-1') {
+            $output .= '<li style="border-bottom:1px dotted #ccc">
+               <p>' . $userName . ' <center> <b> User ' . $row["chat_message"] . ' leave the chat </b> </center>
+                  <div align="right">
+            -<small><em>' . $row['timestamp'] . '</em></small>
+            </div>
+            </p>
+            </li>
+            ';
+        }
+        else if ($row["from_user_id"] != '0') {
             if ($row["from_user_id"] == $_SESSION["user_id"]) {
                 $userName = '<b class="text">You</b>';
             } else {
@@ -142,7 +152,7 @@ function fetchGroupChatHistory($connect)
         }
         else {
             $output .= '<li style="border-bottom:1px dotted #ccc">
-               <p>' . $userName . ' <center> <b> ' . $row["chat_message"] . ' </b> </center>
+               <p>' . $userName . ' <center> <b> User ' . $row["chat_message"] . ' join to the chat </b> </center>
                   <div align="right">
             -<small><em>' . $row['timestamp'] . '</em></small>
             </div>

@@ -23,7 +23,7 @@ if ($_POST["action"] == "current_user") {
 
     $statement = $connect->prepare($query);
     $statement->execute($data);
-} else {
+} else if ($_POST["action"] == "add_user"){
     $data = array(
         ':chatName' => $_POST['chatName'],
         ':login_id' => $_POST['login_id'],
@@ -36,7 +36,7 @@ if ($_POST["action"] == "current_user") {
  
  INSERT INTO chat_message 
  (from_user_id, to_user_id, chat_message, status) 
- VALUES ('0','0',' User ' :login_id ' join to the chat! ', :status)
+ VALUES ('0','0',(SELECT username FROM login WHERE :login_id = user_id ), :status);
  ";
 
     $statement = $connect->prepare($query);
