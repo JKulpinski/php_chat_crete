@@ -10,11 +10,12 @@ include('DB.php');
 session_start();
 $data = array(
     ':login_id' => $_SESSION['user_id'],
+    ':chatName' => $_POST['chatName'],
     ':status'   => '1'
 );
 
 $query = "
- DELETE FROM groupchat WHERE :login_id=login_id AND chatName='chatName';
+ DELETE FROM groupchat WHERE :login_id=login_id AND chatName=:chatName;
 
  INSERT INTO chat_message 
  (from_user_id, to_user_id, chat_message, status) 

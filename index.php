@@ -204,10 +204,11 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
             $('#create_chat_dialog').hide();
             $('#group_chat_dialog').dialog('close');
             $('#is_active_group_chat_window').val('no');
+            let chatName = $("button").attr('id');
             $.ajax({
                 url: "removeFromGroupChat.php",
                 method: "POST",
-                data: {login_id: login_id},
+                data: {login_id: login_id, chatName: chatName},
                 success: function (data) {
                     showGroupChat();
                 }
@@ -288,7 +289,7 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
             $('#is_active_create_chat_window').val('no');
         });
 
-        //open group chat when we click button
+        //open when we click button
         $('#group_chat').click(function () {
             $('#group_chat_dialog').dialog('open');
             $('#is_active_group_chat_window').val('yes');
