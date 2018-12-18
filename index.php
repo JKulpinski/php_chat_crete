@@ -26,7 +26,6 @@ if (!isset($_SESSION['user_id'])) { // if user isn't login yet it redirect him t
     <!--show on mobile devices-->
     <meta name="viewpoint" content="width=device-width, initial-scale=1.0"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
-    <!--        <link rel="stylesheet" type="text/css" href="style.css"/>-->
     <link rel="icon" href="favicon.ico"/>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
     <title>Feedback Chat</title>
