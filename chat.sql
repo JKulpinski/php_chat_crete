@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 18 Gru 2018, 20:00
+-- Czas generowania: 07 Sty 2019, 15:39
 -- Wersja serwera: 10.1.36-MariaDB
 -- Wersja PHP: 7.2.10
 
@@ -43,7 +43,15 @@ CREATE TABLE `chat_message` (
 
 INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `chat_message`, `timestamp`, `status`) VALUES
 (301, 0, 0, 'peterParker', '2018-12-18 19:00:32', 1),
-(302, 0, 0, 'davidMoore', '2018-12-18 19:00:32', 1);
+(302, 0, 0, 'davidMoore', '2018-12-18 19:00:32', 1),
+(303, 2, 1, 'Hello!', '2018-12-18 19:04:36', 0),
+(304, 1, 2, 'Hi! How are you?', '2018-12-18 19:05:11', 0),
+(305, 0, -1, 'peterParker', '2018-12-18 19:06:13', 1),
+(306, 0, 1, ' Hello my friends!', '2018-12-18 19:07:46', 1),
+(307, 2, 1, 'hello', '2018-12-19 09:14:06', 0),
+(308, 2, 1, 'gg', '2018-12-19 09:14:14', 0),
+(309, 0, -1, 'johnsmith', '2018-12-19 09:18:27', 1),
+(310, 0, -1, 'johnsmith', '2018-12-19 09:18:29', 1);
 
 -- --------------------------------------------------------
 
@@ -63,10 +71,7 @@ CREATE TABLE `groupchat` (
 
 INSERT INTO `groupchat` (`id`, `chatName`, `login_id`) VALUES
 (212, 'chatName', 3),
-(218, 'name', 2),
-(219, 'name', 1),
 (220, 'name', 3),
-(221, 'Students', 1),
 (222, 'Students', 2),
 (223, 'Students', 3);
 
@@ -122,7 +127,11 @@ INSERT INTO `login_details` (`login_details_id`, `user_id`, `last_activity`, `is
 (11, 3, '2018-12-18 13:15:21', 'n'),
 (12, 4, '2018-12-18 15:18:48', 'n'),
 (13, 1, '2018-12-18 18:56:39', 'n'),
-(14, 1, '2018-12-18 19:00:58', 'n');
+(14, 1, '2018-12-18 19:04:39', 'n'),
+(15, 2, '2018-12-18 19:06:14', 'n'),
+(16, 1, '2018-12-18 19:41:41', 'n'),
+(17, 1, '2018-12-19 11:39:50', 'n'),
+(18, 2, '2018-12-19 11:39:45', 'n');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -160,7 +169,7 @@ ALTER TABLE `login_details`
 -- AUTO_INCREMENT dla tabeli `chat_message`
 --
 ALTER TABLE `chat_message`
-  MODIFY `chat_message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
+  MODIFY `chat_message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
 
 --
 -- AUTO_INCREMENT dla tabeli `groupchat`
@@ -172,13 +181,13 @@ ALTER TABLE `groupchat`
 -- AUTO_INCREMENT dla tabeli `login`
 --
 ALTER TABLE `login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `login_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `login_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
